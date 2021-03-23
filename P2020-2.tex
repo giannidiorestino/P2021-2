@@ -234,21 +234,27 @@ Let us apply the computations to the probabilities of deviations $F_n$ from $p$.
 \section{Distribution function and quantile function}
 \label{sec:distr-funct-quant}
 
-On the real measurable space $(\R,\mathcal B)$ we define the \emph{distribution function of the probability measure $\mu$} to be the real function $\R \ni x \mapsto F_\mu(x) = \mu(]-\infty,x])$. The distribution function of the real random variable $X$ is the distribution function of the induced probability measure, $F_X(x) = \probof{X \leq x}$. The class of intervals $\setof{]-\infty,x}{x \in \R}$ is closed under intersection, $]-\infty, x] \cap ]-\infty,y] = ]-\infty,x \wedge y]$, hence $\mu=\nu$ if $F_\mu = F_\nu$.
+On the real measurable space $(\R,\mathcal B)$ we define the \emph{distribution function of the probability measure $\mu$} to be the real function $\R \ni x \mapsto F_\mu(x) = \mu(]-\infty,x])$. The distribution function of the real random variable $X$ is the distribution function of the induced probability measure, $F_X(x) = \probof{X \leq x}$. The class of intervals $\setof{]-\infty,x}{x \in \R}$ is closed under intersection and generates the Borel $\sigma$-algebra $\mathcal B$. In fact $]-\infty, x] \cap ]-\infty,y] = ]-\infty,x \wedge y]$ and $]a,b[ = \cup_{n=1}^\infty ]-\infty,b-1/n] \setminus ] \infty,a]$, hence $\mu=\nu$ if $F_\mu = F_\nu$.
 
-\emph{The distribution function of $\mu$ has the following properties: 1) $\lim_{x \to -\infty} F_\mu(x) = 0$; 2) $\lim_{x \to +\infty} F_\mu(x) = 1$; 3) $(F_\mu(y) - F_\mu(x))(y-x) \geq 0$; 4) $\lim_{y \downarrow x} F_\mu(y) = F_\mu(x)$.} Notice that $\mu\set{x} = F_\mu(x) - F_\mu(x-)$.
+\emph{The distribution function of $\mu$ has the following properties:
+  \begin{enumerate}
+  \item $\lim_{x \to -\infty} F_\mu(x) = 0$;
+  \item $\lim_{x \to +\infty} F_\mu(x) = 1$;
+  \item $(F_\mu(y) - F_\mu(x))(y-x) \geq 0$;
+  \item $\lim_{y \downarrow x} F_\mu(y) = F_\mu(x)$;
+  \item $\lim_{y \uparrow x} F_\mu(y) = \mu(]-\infty, x[)$.
+\end{enumerate}}
+Notice that $\mu\set{x} = F_\mu(x) - F_\mu(x-)$, that is, the discontinuity points are jumps and there is a concentrated [probability mass the point of discontinuity.
 
-We will show below that, conversely, \emph{any function $F \colon \R \to [0,1]$ with the properties 1) to 4) is a distribution function of a unique probability measure}.
+A generic function satisfying (1) to (5) is a \emph{distribution function}. We will show below that, conversely, \emph{any function $F \colon \R \to [0,1]$ with the properties 1) to 5) is a distribution function of a unique probability measure}. Distribution function on $\reals$ are, in a sense, similar to probability functions of a finite set in that they characterize the measure. But probability function are probability densities with respect ot a measure, while distribution function are not.
 
 Given any distribution function $F$ and any real $t$ the set $\set{F \geq t} = \setof{x \in \R}{F(x) \geq t}$ is a left-closed interval $[Q(t),+\infty[$. In fact, $F(y) \geq t$ implies $F(z) \geq t$ for all $z \geq y$ and the minimum of $\setof{x \in \R}{F \geq t}$ obtains at some $Q(t) \in \R \cup \set{-\infty,+\infty}$. Notice that for all $x,t \in \reals$, $Q(t) \leq x$ is equivalent to $F(x) \geq t$ and $Q(t) < x$ is equivalent to $F(x) < t$. If $t \leq 0$, then $Q(t) = -\infty$; if $t > 1$ then $Q(t) = + \infty$; if $t \in ]0,1[$ then $Q(t)$ is finite; if $t=1$ then the relevant condition is $F(x) = 1$ hence $Q(1)$ can be either $+\infty$ of finite. The restriction of $Q$ to $]0,1[$ is called the \emph{quantile function of $F$}.
 
 \emph{The quantile function is non-decreasing and left-continuous}. In fact: 1) $s < t$ implies $\setof{x\in\R}{F(x) \geq t} \subseteq \set{x\in\R}{F(x) \geq s}$ hence $Q(s) \leq Q(t)$; 2) $\setof{t \in ]0,1[}{Q(t) \leq x}$ is a (relatively) closed interval.
 
-A non-decreasing function has at most a numerable many jump points. It can be seen by evaluating the number of jumps larger than a given $\epsilon > 0$. A non decreasing function is continuous in all points except a nuberable set.
+A non-decreasing function has at most a numerable many jump points. It can be seen by evaluating the number of jumps larger than a given $\epsilon > 0$. A non decreasing function is continuous in all points except a denuberable set.
 
-\begin{example}
 As $Q(t) = \inf\setof{x \in \R}{F(x) \geq t}$, we have $Q(F(x)) = \inf\setof{y \in \R}{F(y) \geq F(x)} = x^- \leq x$. If $F$ is not invertible then $x^- < x$ for some $x$ and $F(Q(F(x))) = F(x)$. If $F$ is invertible, then $x^-=x$ and $Q = F^{-1}$.
-\end{example}
 
 \emph{Let $F$ be a distribution function with quantile function $Q$. Let $m$ be the Lebesgue probability measure on $]0,1[$ and let $\mu = Q_{\#} m$ be the image of $m$ under $q$. The distribution function of $\mu$ is $F$, $F_{Q_{\#} m} = F$.} In fact, $Q^{-1}(]-\infty,x]) = \setof{t \in ]0,1[}{Q(t) \leq x} = \setof{t \in ]0,1[}{F(x) \geq t} = ]0,F(x)]$ so that $m(Q^{-1}(]-\infty,x])) = F(x)$.
 
@@ -260,7 +266,35 @@ If moreover $F_\mu \in C^1(\R)$ then the Change of Variable Theorem gives
 \begin{equation*}
   \int \phi(x) \ \mu(dx) = \int_0^1 \phi(F_\mu^{-1}(t)) \ dt = \int_{F_\mu(-\infty)}^{F_\mu(+\infty)} \phi(x) F'_{\mu}(x) \ dx = \int_{F_\mu(-\infty)}^{F_\mu(+\infty)} \phi(x)f_{\mu}(x) \ dx \ ,
 \end{equation*}
-where $f_\mu = F'_\mu$ is the \emph{density} of $\mu$. This is a special case of the general notion of density.
+where $f_\mu = F'_\mu$ is the \emph{density} of $\mu$ with respect to the Lebesgue measure $m$. This is a special case of the general notion of density.
+
+Notice that we have proved that \emph{every probability measure on $(\reals,\mathcal B)$ can be \emph{simulated} with the Lebesgue probability measure on $]0,1[$.}
+
+\emph{Let $X$ be a non-negative random variable on $(\Omega,\mathcal A,\mathbb P)$ with distribution function $F_X$. Then,
+\begin{equation*}
+  \expectof X = \int_0^{+\infty} (1-F_X(t-)) \ dt
+\end{equation*}}
+
+Let $\mu_X$ be the distribution of $X$, that is $\mu_X = X_\# \mathbb P$. Then, by the change of variable equation,
+\begin{equation*}
+  \expectof X = \expectof {([0,+\infty[)X} = \int (x \geq 0) x \ \mu_X(dx)
+\end{equation*}
+Now use the Fubini theorem.
+\begin{multline*}
+  \int_0^\infty x \ \mu_X(dx) = \int_0^{+\infty} \left(\int (t \leq x) dt\right) \mu_X(dx) = \int_0^\infty dt \int (t \leq x)  \mu_X(dx) = \\ \int_0^\infty \mu_X([t,\infty[) \ dt = \int_0^\infty (1 - F_X(t-)) \ dt \ .  
+\end{multline*}
+
+\begin{example}
+Let $X$ be a real random variable. For each positive $\theta > 0$, $\euler^{\theta X}$ is a positive random variable, with distribution function
+\begin{equation*}
+  \probof{\euler^{\theta X} \leq t} = \probof{X \leq \theta^{-1} \log t} = F_X(\theta^{-1} \log t) \ .
+\end{equation*}
+It follows that
+\begin{equation*}
+  \expectof{\euler^{\theta X}} = \int_0^\infty (1 - F_X(\theta^{-1} \log t-)) \ dt \ . 
+\end{equation*}
+One can proceed further with the transformation $s = \theta^{-1} \log t$ in the RHS.
+\end{example}
 
 \section{Weak convergence}
 \label{sec:weak-convergence}
