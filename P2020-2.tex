@@ -234,7 +234,7 @@ Let us apply the computations to the probabilities of deviations $F_n$ from $p$.
 \section{Distribution function and quantile function}
 \label{sec:distr-funct-quant}
 
-On the real measurable space $(\R,\mathcal B)$ we define the \emph{distribution function of the probability measure $\mu$} to be the real function $\R \ni x \mapsto F_\mu(x) = \mu(]-\infty,x])$. The distribution function of the real random variable $X$ is the distribution function of the induced probability measure, $F_X(x) = \probof{X \leq x}$. The class of intervals $\setof{]-\infty,x}{x \in \R}$ is closed under intersection and generates the Borel $\sigma$-algebra $\mathcal B$. In fact $]-\infty, x] \cap ]-\infty,y] = ]-\infty,x \wedge y]$ and $]a,b[ = \cup_{n=1}^\infty ]-\infty,b-1/n] \setminus ] \infty,a]$, hence $\mu=\nu$ if $F_\mu = F_\nu$.
+On the real measurable space $(\R,\mathcal B)$ we define the \emph{distribution function of the probability measure $\mu$} to be the real function $\R \ni x \mapsto F_\mu(x) = \mu(]-\infty,x])$. The distribution function of the real random variable $X$ is the distribution function of the induced probability measure, $F_X(x) = \probof{X \leq x}$. The class of intervals $\setof{]-\infty,x]}{x \in \R}$ is closed under intersection and generates the Borel $\sigma$-algebra $\mathcal B$. In fact $]-\infty, x] \cap ]-\infty,y] = ]-\infty,x \wedge y]$ and $]a,b[ = \cup_{n=1}^\infty ]-\infty,b-1/n] \setminus ] -\infty,a]$, hence $\mu=\nu$ if $F_\mu = F_\nu$.
 
 \emph{The distribution function of $\mu$ has the following properties:
   \begin{enumerate}
@@ -277,7 +277,7 @@ Notice that we have proved that \emph{every probability measure on $(\reals,\mat
 
 Let $\mu_X$ be the distribution of $X$, that is $\mu_X = X_\# \mathbb P$. Then, by the change of variable equation,
 \begin{equation*}
-  \expectof X = \expectof {([0,+\infty[)X} = \int (x \geq 0) x \ \mu_X(dx)
+  \expectof X = \expectof {(X \geq 0 )X} = \int (x \geq 0) x \ \mu_X(dx)
 \end{equation*}
 Now use the Fubini theorem.
 \begin{multline*}
@@ -290,19 +290,72 @@ Let $X$ be a real random variable. For each positive $\theta > 0$, $\euler^{\the
   \probof{\euler^{\theta X} \leq t} = \probof{X \leq \theta^{-1} \log t} = F_X(\theta^{-1} \log t) \ .
 \end{equation*}
 It follows that
-\begin{equation*}
-  \expectof{\euler^{\theta X}} = \int_0^\infty (1 - F_X(\theta^{-1} \log t-)) \ dt \ . 
-\end{equation*}
+\begin{align*}
+  \expectof{\euler^{\theta X}} &= \int_0^\infty (1 - F_X(\theta^{-1} \log t-)) \ dt \\
+ &= \int_0^\infty (1 - F_X^-(\theta^{-1} \log t)) \ dt \\
+  &= \int_{-\infty}^{+\infty} (1 - F_X^-(s)) \ \theta s \euler^{\theta s} \ ds\ . 
+\end{align*}
 One can proceed further with the transformation $s = \theta^{-1} \log t$ in the RHS.
+\end{example}
+
+The previous example shows how to compute $\expectof {\phi\circ X}$ with the distribution function when $\phi$ is increasing. The following is another special case.
+
+Assume $\phi$ continuously differentiable, $\phi \in C^1(\reals)$ and assume $\phi\circ X$ is integrable. Write
+\begin{equation*}
+    \phi(x) = \phi(0) + \int_0^x \phi'(u) \ du = \begin{cases}
+      \phi(0) + \int (0 < u \leq x) \phi'(u) \ du & \text{if $x > 0$} \\ \phi(0) & \text{if $x=0$} \\
+      \phi(0) - \int (x < u \leq 0) \phi'(u) \ du & \text{if ${x < 0}$}
+    \end{cases}
+\end{equation*}
+With the kernel $K(u,x) = -(x < u \leq 0) + (0 < u \leq x)$, it holds
+\begin{equation*}
+\phi(x) = \phi(0) + \int K(u,x) \phi'(u) \ du \ .    
+\end{equation*}
+
+Fubini gives
+\begin{align*}
+    \int \phi(x) \ \mu(dx) &= \phi(0) + \int \left( \int K(u,x) \phi'(u) \ du\right) \ \mu(dx) \\
+    &= \phi(0) + \int \phi'(u) \left(\int k(u,x) \ \mu(dx) \right) du \\  &= \phi(0) - \int_{-\infty}^0 \phi'(u) F(u-) \ du + \int_0^{\infty} \phi'(0) (1 - F(u-)) \ du 
+\end{align*}
+
+Notice that $F(u) = F(u-)$ almost everywhere because the number of jumps is denumerable. Hence, in the integral both give the same result.
+
+\begin{example}
+[Uniform distribution on an interval] Given $a < b$, $a,b \in \reals$, consider the distribution function
+\begin{equation*}
+U_{a,b}(x) = \begin{cases}
+  0 & \text{if $x < a$} \\
+  \dfrac{x-a}{b-a} & \text{if $a \leq x \leq b$} \\
+  1 & \text{if $x > b$}
+\end{cases}
+\end{equation*}
+This function is not differentiable, but it is a primitive,
+\begin{equation*}
+    U_{a,b}(x) = \int_{-\infty}^x \frac1{b-a} (a \leq u b) \ du
+\end{equation*}
+$U_{a,b}$ has \emph{finite variation}. The equation above shows that $U_{a,b}$ is the distribution function of the probability measure with density $u_{a,b}(u) = \frac1{b-a} (a \leq u \leq b)$ with respect to the Lebesgue measure.
+
+The quantile function is
+\begin{equation*}
+    ]0,1[ \ni t \mapsto \frac {b - t}{b-a}
+\end{equation*}
+For each non-negative $\phi$,
+\begin{equation*}
+\int \phi(u) u_{a,b}(u) \ du = \int_0^1 \phi\left(\frac{b-t}{b-a}\right)  \ dt  
+\end{equation*}
 \end{example}
 
 \section{Weak convergence}
 \label{sec:weak-convergence}
 
+Given a sequence of random variables $(X_n)$ and a real random variable $\phi$, we are frequently interested in the convergence of the expected values, that is, the convergence of the sequence $(\expectof{\phi \circ X_n})$. Denote by $\mu_n$ the distribution of $X_n$, by $F_n$ the distribution function of $\mu_n$, and by $Q_n$ the quantile function of $F_n$.
 
-\emph{Let $\mu$ and $\nu_n$, $n \in \N$ be real probability measures with distribution functions $F$ and $F_n$ and quantile functions $Q$ and $Q_n$, respectively. The following conditions are equivalent.
+\begin{example} Consider three examples: $X_n \sim \delta_{1/n}$, $X_n \sim U_{-n,n}$, and $X_n \sim U_{-1/n,1/n}$. Compare the example with the theorem below.
+\end{example}
+
+\emph{Let $\mu$ and $\mu_n$, $n \in \N$ be real probability measures with distribution functions $F$ and $F_n$ and quantile functions $Q$ and $Q_n$, respectively. The following conditions are equivalent.
 \begin{enumerate}
-\item $\lim_{n\to\infty} Q_n = Q$ almost surely;
+\item $\lim_{n\to\infty} Q_n = Q$ almost everywhere;
 \item For all continuous and bounded $\phi$, $\phi \in C_{\text{b}}$, it holds $\lim_{n \to \infty} \int \phi \ d\mu_n = \int \phi \ d\mu$. This convergence is called \emph{weak convergence}, $\mu_n \to \mu$.
 \item  $F_n$ converges to $F$ at all continuity points of $F$.
 \end{enumerate}}
@@ -405,7 +458,7 @@ non-negative bounded $\mathcal G$-measurable real random variables.
 
 \begin{example}[Trivial cases] The conditional expectation wrt the
   trivial $\sigma$-algebras is the ordinary expectation. The
-  conditional expectation of the total $\sigma$-algebra us the identity.
+  conditional expectation of the total $\sigma$-algebra is the identity.
   
 \end{example}
 \begin{example}[Symmetric $\sigma$-algebra]
@@ -561,13 +614,12 @@ integrals wrt $p \cdot \mu$ are computed by
   \int f \ d(p \cdot \mu) = \int f \ pd\mu \ .
 \end{equation*}
 
-The following existence theorem for the density holds true.
+The following existence theorem for the density holds true. See a proof in \cite{rudin:1987-3rd}
 
 \begin{proposition}[Radon-Nikodym theorem]
 If $\mu(A) = 0$, then $p \cdot \mu(A) = \int_A p \ d\mu =
 0$. Conversely, if $\nu$ is a finite measure and $\mu(A) = 0$ implies
-$\nu(A) =0$, then $\nu = p \cdot \nu$ for some density $p$.  
-\end{proposition}
+$\nu(A) =0$, then $\nu = p \cdot \nu$ for some density $p$. \end{proposition}
 
 The relation $\nu = p \cdot \mu$ is also called absolute continuity
 and written $\nu \ll \mu$.
